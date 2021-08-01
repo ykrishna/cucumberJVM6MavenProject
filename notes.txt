@@ -1,0 +1,110 @@
+1. Setup
+https://cucumber.io/docs/guides/10-minute-tutorial/
+In this quick tutorial you will learn how to:
+Install Cucumber
+Write your first Scenario using the Gherkin syntax
+Write your first step definition in Java
+Run Cucumber
+Learn the basic workflow of Behaviour-Driven Development (BDD)
+We’ll use Cucumber to develop a small library that can figure out whether it’s Friday yet.
+
+Before we begin, you will need the following:
+
+Java SE
+A build tool. You can choose between:
+Maven - version 3.3.1 or higher
+IntelliJ IDEA (which will be used in this tutorial)
+IntelliJ IDEA Cucumber for Java plugin
+
+Create an empty Cucumber project
+Decide whether you’d prefer to use Gradle or Maven.
+
+With Maven
+
+For Maven, we’ll start by creating a new project directory with the cucumber-archetype Maven plugin. Open a terminal, go to the directory where you want to create your project, and run the following command:
+
+mvn archetype:generate                        \
+   "-DarchetypeGroupId=io.cucumber"           \
+   "-DarchetypeArtifactId=cucumber-archetype" \
+   "-DarchetypeVersion=6.10.4"                \
+   "-DgroupId=com.krishna"                    \
+   "-DartifactId=cucumberJavaTraining"       \
+   "-Dpackage=com.chaduvuko"                  \
+   "-Dversion=1.0.0-SNAPSHOT"                 \
+   "-DinteractiveMode=false"
+
+You should get something like the following result:
+
+[INFO] Project created from Archetype in dir: <directory where you created the project>/cucumber
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+Change into the directory that was just created by running the following command:
+
+cd cucumberJavaTraining
+Open the project in IntelliJ IDEA:
+
+File -> Open… -> (Select the pom.xml)
+Select Open as Project
+
+2. Create folder structure, files , step definitions files etc., just follow the way like this project
+
+3. update POM.xml
+add dependencies, add environment properties, compiler version , UTF version, build plugins etc..
+
+4. cucumber features files, add snippets, update runner class
+
+5.use Webdriver Manager for maintaining drivers and selenium server
+https://github.com/bonigarcia/webdrivermanager
+
+System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+System.setProperty("webdriver.edge.driver", "/path/to/msedgedriver.exe");
+System.setProperty("webdriver.opera.driver", "/path/to/operadriver");
+System.setProperty("phantomjs.binary.path", "/path/to/phantomjs");
+System.setProperty("webdriver.ie.driver", "C:/path/to/IEDriverServer.exe");
+
+WebDriverManager.chromedriver().setup();
+WebDriverManager.firefoxdriver().setup();
+WebDriverManager.edgedriver().setup();
+WebDriverManager.operadriver().setup();
+WebDriverManager.phantomjs().setup();
+WebDriverManager.iedriver().setup();
+WebDriverManager.chromiumdriver().setup();
+or
+Class<? extends WebDriver> driverClass = ChromeDriver.class;
+WebDriverManager.getInstance(driverClass).setup();
+WebDriver driver = driverClass.newInstance();
+
+This generic driver manager can be also parameterized using the enumeration DriverManagerType. For instance as follows:
+
+import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+WebDriverManager.getInstance(CHROME).setup();
+WebDriver driver = new ChromeDriver();
+
+You can also use the DriverManagerType and get the complete driver class name. It might help you to create a browser
+instance without explicitly define the browser class.
+
+import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
+import org.openqa.selenium.WebDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+DriverManagerType chrome = DriverManagerType.CHROME;
+WebDriverManager.getInstance(chrome).setup();
+Class<?> chromeClass =  Class.forName(chrome.browserClass());
+driver = (WebDriver) chromeClass.newInstance();
+
+6. Run Steps
+
+mvn test
+
+or
+
+run with CLI Screen shot attached
+
+7. create git repo then add Git remote repo from local
+git remote add origin https://github.com/ykrishna/cucumberJVM6MavenProject.git
